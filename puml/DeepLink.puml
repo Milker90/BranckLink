@@ -1,0 +1,43 @@
+@startuml
+title Closely Deep Linking
+actor Lead as lead
+
+participant "Message App" as message
+participant "Web" as web
+participant "Closely App" as app
+participant "Closely Server" as server
+participant "Branck" as branch
+
+autonumber
+
+activate server
+server-> branch: Closely服务端根据AgentId和推广落地页url向Branch请求生成链接
+branch--> server: Branch返回链接
+server-> message: Closely服务端发送链接给lead的Message App
+deactivate server
+
+activate message
+lead-> message:点击消息中的链接
+message-> web: 打开浏览器, 浏览器开始请求链接，然后重定向到推广落地页
+deactivate message
+
+activate web
+web-> web: 根据落地页url中入参数, 重新生成Google Play Store下载地址
+web-> web: 根据落地页url中入参数, 重新生成url scheme链接
+web-> web: 将当前落地页url完整的 copy到iOS系统的粘贴板
+web-> web: 将Smart App Banner的app-argument赋值为url scheme链接
+
+lead-> web: 点击打开App按钮
+web-> app: 打开App
+deactivate web
+
+activate app
+app-> branch: 通过Branch SDK从branch服务器匹配业务数据
+branch--> app: 返回业务数据(agentId)
+lead-> app: 输入邮箱/点击三方登录，开始进入登录/注册流程
+app-> server: 根据email和agentId请求agent信息
+server--> app: 返回agent信息
+app-> app: 继续登录流程
+deactivate app
+
+@enduml

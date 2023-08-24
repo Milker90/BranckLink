@@ -1,0 +1,30 @@
+curl --request POST \
+     --url https://api2.branch.io/v1/url \
+     --header 'accept: application/json' \
+     --header 'content-type: application/json' \
+     --data '
+{
+  "data": {
+    "$ios_deepview": "closely_deepview_1",
+    "$android_deepview": "closely_deepview_1",
+    "agentId": 2000
+  },
+  "branch_key": "key_live_hCap0I6Rzle2anqxNTzHNnepwBma7PHg"
+}
+'
+
+
+curl --request POST \
+    --url https://api2.branch.io/v1/url \
+    --header 'accept: application/json' \
+    --header 'content-type: application/json' \
+    --data '
+{
+ "data": {
+   "$fallback_url": "https://static.chimeroi.com/closely-download/index.html?agentId=20230831",
+   "$web_only": true,
+   "$ios_nativelink": true,
+   "agentId": 20230831
+ },
+ "branch_key": "key_live_hCap0I6Rzle2anqxNTzHNnepwBma7PHg"
+}
